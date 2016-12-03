@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="images/favicon.png">
+    <title>Documentation | ProductInisghts API</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[]">
+ <a href="#" id="nav-button">
+      <span>
+        NAV
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        <div class="lang-selector">
+        </div>
+      <div id="toc">
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p><strong>ProductInsights</strong> is a product review analyzer that classifies reviews into positive or negative via sentiment analysis using pandas and NLTK python libraries and perform various operations such as feature extraction using Modified TF-IDF Algorithm, text clustering and text summarization on it that can benefit any corporation. The model is made accessible for real-time use through custom API using Flask.</p>
+
+<p>No authorization key is required to access this API. Anyone can directly access the API at the endpoints as given in the documentation.</p>
+
+<p>Go through the documentation given below to get familiar with the API. If you have any issues or trouble using this API, please report it to us.</p>
+
+<p>All URLs referenced in the documentation have the following base:</p>
+
+<aside class="notice" style="text-align: center; font-size: 15px; font-weight: 600; margin-bottom: 0;">
+  http://104.131.188.231:5000
+</aside>
+
+<h2 id="functionality">Functionality</h2>
+
+<p>ProductInsights API allows you to do the following actions:</p>
+
+<ul>
+<li><p>Post review for classification of review into positive and negative.</p></li>
+<li><p>Extract important features from the reviews.</p></li>
+<li><p>Cluster and Summarize reviews</p></li>
+</ul>
+
+<h2 id="web-service">Web Service</h2>
+
+<p>All API URLs listed in this documentation are relative to <strong>http://104.131.188.231:5000</strong>. For example, the <a href="#get-all-supported-languages">/languages</a> API call is reachable at <strong>http://104.131.188.231:5000/languages</strong></p>
+
+<h1 id="methods">Methods</h1>
+
+<h2 id="post-review">Post review for Sentimental Analysis</h2>
+
+<blockquote>
+<p>The returned JSON structured is like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"rev_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"rep_score"</span><span class="p">:</span><span class="w"> </span><span class="mi">3.414</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"logisticsDept"</span><span class="p">:</span><span class="w"> </span><span class="mi">"0"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"qualityDept"</span><span class="p">:</span><span class="w"> </span><span class="mi">"0,4,5"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"financeDept"</span><span class="p">:</span><span class="w"> </span><span class="mi">"0,1"</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves the reputation score and the department classification results for the posted review.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST /Review</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Identifier</td>
+</tr>
+<tr>
+<td>userID</td>
+<td>The id of the reviewer.</td>
+</tr>
+<tr>
+<td>reviewID</td>
+<td>The id of the review.</td>
+</tr>
+<tr>
+<td>rating</td>
+<td>The rating given by the reviewer for the product.</td>
+</tr>
+<tr>
+<td>reviewText</td>
+<td>The review written by the reviewer.</td>
+</tr>
+</tbody></table>
+
+<h3 id="return-value">Return Value</h3>
+
+<table id="language_return_table">
+  <tr>
+    <td id="first_td">
+      <h3>JSON</h3>
+    </td>
+    <td id="second_td">
+      <table>
+        <tr>
+          <td>
+            rev_id
+          </td>
+          <td>
+            identifier
+          </td>
+        </tr>
+        <tr>
+          <td>
+            rep_score
+          </td>
+          <td>
+            The sentiment analysis score for the posted review.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            logisticsDept
+          </td>
+          <td>
+            The lines corresponding to the logistics department.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            qualityDept
+          </td>
+          <td>
+            The lines corresponding to the quality department.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            financeDept
+          </td>
+          <td>
+            The lines corresponding to the finance department.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<h2 id="Post-for-Feature-Extraction">Post for Feature Extraction</h2>
+
+<blockquote>
+<p>The returned JSON structured is like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Score"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.097</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Feature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"battery"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Score"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.17</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Feature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"screen"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Score"</span><span class="p">:</span><span class="w"> </span><span class="mi">0.19</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Feature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="w">
+  </span><span class="p">}
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves features for the posted reviews.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST /TFIDF</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>reviewerText</td>
+<td>The collection of review text posted for the product.</td>
+</tr>
+</tbody></table>
+
+<h3 id="return-value">Return Value</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Score</td>
+<td>Score for the feature.</td>
+</tr>
+<tr>
+<td>Feature</td>
+<td>The selected feature.</td>
+</tr>
+</tbody></table>
+
+<h2 id="review-clustering-and-summarization">Review Clustering and Summarization</h2>
+
+<p>This endpoint retrieves the clusters and summarized text.</p>
+
+<h3>Input</h3>
+
+<p><code class="prettyprint"> <a href="cluster-input.json"> JSON FILE</a></a></code></p>
+
+<h3>Output</h3>
+
+<p><code class="prettyprint"> <a href="cluster-output.json"> JSON FILE</a></a></code></p>
+
+<h3>Visualization</h3>
+
+<p><code class="prettyprint"> <a href="d3/"> D3 Cluster</a></a></code></p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST /Cluster</code></p>
+
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
